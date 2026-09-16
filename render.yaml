@@ -1,15 +1,13 @@
 services:
-  # 1. Fullstack Web Service (React Frontend + Express API)
+  # 1. Full-Stack Web Service (React Frontend + Express API)
   - type: web
     name: civicresolve-web
-    env: node
+    runtime: node
     plan: free
-    buildCommand: "cd frontend && bun install && bun run build && cd ../backend && bun install"
-    startCommand: "cd backend && bun server.js"
+    buildCommand: cd frontend && npm install && npm run build && cd ../backend && npm install
+    startCommand: cd backend && node server.js
     healthCheckPath: /api/health
     envVars:
-      - key: PORT
-        value: 5001
       - key: NODE_ENV
         value: production
       - key: AI_SERVICE_URL
@@ -21,11 +19,8 @@ services:
   # 2. Python AI Microservice (FastAPI NLP Classifier)
   - type: web
     name: civicresolve-ai
-    env: python
+    runtime: python
     plan: free
-    buildCommand: "cd ai-service && pip install -r requirements.txt"
-    startCommand: "cd ai-service && python -m uvicorn main:app --host 0.0.0.0 --port 8000"
+    buildCommand: cd ai-service && pip install -r requirements.txt
+    startCommand: cd ai-service && uvicorn main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
-    envVars:
-      - key: PORT
-        value: 8000

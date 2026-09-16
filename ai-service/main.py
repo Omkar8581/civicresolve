@@ -7,7 +7,12 @@ from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
+import sys
+import os
 import uvicorn
+
+# Ensure ai-service directory is in python sys.path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from classifier import classify_complaint
 from vision import analyze_image_bytes

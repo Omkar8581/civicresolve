@@ -1,0 +1,10 @@
+{
+  "name": "civicresolve",
+  "version": "1.0.0",
+  "description": "CivicResolve AI-Powered Citizen Grievance Resolution System",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build && cd ../backend && npm install",
+    "start": "cd backend && node server.js"
+  }
+}
