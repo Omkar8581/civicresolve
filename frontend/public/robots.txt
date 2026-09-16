@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Private Administrative & Officer Routes
+Disallow: /admin/
+Disallow: /officer/
+
+# Sitemap
+Sitemap: https://civicresolve-web.onrender.com/sitemap.xml
