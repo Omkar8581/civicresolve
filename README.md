@@ -190,3 +190,102 @@ VITE_FIREBASE_APP_ID=your-app-id
 4. **Dispatch**: Backend records the complaint with reference ID (e.g. `CR-2026-9966`) and routes it to the relevant department.
 5. **Department Officer Actions**: Field officers inspect department tickets, update progress, append inspection remarks, and mark issues as **Resolved**.
 6. **Live Tracking**: Citizens enter their reference ID at any time to monitor progress across all resolution milestones.
+
+---
+
+## 🔔 Multi-Channel Citizen Notification System
+
+CivicResolve features an automated, failure-isolated notification engine supporting three delivery channels:
+
+1. **Email Notification** (SMTP / Nodemailer)
+2. **SMS Notification** (Twilio Provider API Adapter)
+3. **In-App Notification** (Firestore `notifications` collection with unread counter & interactive bell)
+
+### Notification Channels by Event Type
+
+| Event Trigger | Description | Channels Dispatched |
+| :--- | :--- | :--- |
+| **Complaint Submitted** | Citizen files a new grievance | 🔔 In-App + 📧 Email |
+| **Complaint Assigned** | Municipal admin/AI assigns issue to department | 🔔 In-App + 📧 Email |
+| **Complaint Status Changed** | Status moves between Pending, In Progress, etc. | 🔔 In-App + 📧 Email + 📱 SMS |
+| **Complaint Resolved** | Officer marks ticket as Resolved with inspection remarks | 🔔 In-App + 📧 Email + 📱 SMS |
+
+### Key System Guarantees
+
+- **Idempotent Resolution**: Prevents duplicate notification spam. When a ticket is marked "Resolved", `resolvedNotifiedAt` timestamp is saved. Subsequent edits while remaining "Resolved" will never re-send notifications.
+- **Channel Isolation & Failure Tolerance**: If an external provider (e.g. SMTP or SMS) fails or experiences a timeout, the other channels (such as In-App and SMS) still succeed uninterrupted. Per-channel delivery statuses and errors are captured on the notification document.
+- **Zero Frontend Leakage**: All SMS/SMTP API keys and provider tokens remain strictly on the backend.
+- **Safe Simulation Mode**: When credentials are not configured (`NOTIFICATION_TEST_MODE=true`), all emails and SMS messages are safely logged with full formatting to the terminal without incurring external API costs.
+
+### Firestore Notifications Schema
+
+```json
+{
+  "notificationId": "NOTIF-111173",
+  "userId": "citizen_demo_1",
+  "citizenEmail": "aarav.sharma@example.com",
+  "complaintId": "CR-2026-8106",
+  "type": "resolved",
+  "title": "Complaint Resolved: CR-2026-8106",
+  "message": "Your complaint \"Broken street lamp\" has been resolved by Electrical & Streetlighting Division.",
+  "createdAt": "2026-09-16T20:21:51.173Z",
+  "read": false,
+  "channels": ["in_app", "email", "sms"],
+  "deliveryStatus": {
+    "inApp": "delivered",
+    "email": "simulated_delivered",
+    "sms": "simulated_delivered"
+  },
+  "deliveryErrors": null,
+  "remarks": "Lamp fixture replaced and high-efficiency LED installed. Tested functional."
+}
+```
+
+### Notification Environment Variables (`backend/.env`)
+
+```env
+# Enable Safe Simulation Mode (default for local dev)
+NOTIFICATION_TEST_MODE=true
+
+# Sender Identity
+EMAIL_FROM="CivicResolve Notifications <notifications@civicresolve.gov>"
+
+# Live Email SMTP Settings (optional, when NOTIFICATION_TEST_MODE=false)
+SMTP_HOST=smtp.sendgrid.net
+SMTP_PORT=587
+SMTP_USER=apikey
+SMTP_PASS=your_sendgrid_api_key
+
+# Live SMS Provider Settings (Twilio)
+SMS_PROVIDER=twilio
+TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_AUTH_TOKEN=your_twilio_auth_token
+TWILIO_PHONE_NUMBER=+1234567890
+```
+
+### Local Testing of Notification Workflow
+
+1. **Check Citizen Notifications**:
+   ```bash
+   curl "http://localhost:5001/api/notifications?userId=citizen_demo_1"
+   ```
+
+2. **Trigger Resolution via Officer Status Update**:
+   ```bash
+   curl -X PUT "http://localhost:5001/api/complaints/CR-2025-1001/status" \
+     -H "Content-Type: application/json" \
+     -d '{"status": "Resolved", "remarks": "Pothole filled and road leveled on 17 Sep"}'
+   ```
+   *(Observe terminal output showing formatted Email and SMS simulator dispatches!)*
+
+3. **Verify Duplicate Prevention**:
+   Run the exact same command again. The system logs:
+   `ℹ️ Resolution notification already sent for CR-2025-1001. Skipping duplicate.`
+
+4. **Mark As Read / Read-All**:
+   ```bash
+   curl -X PUT "http://localhost:5001/api/notifications/read-all" \
+     -H "Content-Type: application/json" \
+     -d '{"userId": "citizen_demo_1"}'
+   ```
+

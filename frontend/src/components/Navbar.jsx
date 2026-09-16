@@ -16,6 +16,7 @@ import {
   ShieldCheck,
   UserCheck
 } from 'lucide-react';
+import { NotificationBell } from './NotificationBell';
 
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -177,6 +178,9 @@ export const Navbar = () => {
 
           {/* User Auth Section */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Citizen / User Notification Bell */}
+            <NotificationBell />
+
             {isAuthenticated && currentUser ? (
               <div className="flex items-center gap-3">
                 <Link
@@ -233,8 +237,9 @@ export const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="md:hidden flex items-center">
+          {/* Mobile Actions (Bell + Menu Toggle) */}
+          <div className="md:hidden flex items-center gap-2">
+            <NotificationBell />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100"

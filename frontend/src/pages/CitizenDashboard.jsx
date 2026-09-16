@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   PlusCircle,
   Clock,
@@ -10,9 +10,17 @@ import {
   Eye,
   ShieldCheck,
   AlertTriangle,
+  Bell,
+  Mail,
+  Smartphone,
+  Check,
+  Inbox,
+  ExternalLink
 } from 'lucide-react';
 import { StatusBadge } from '../components/StatusBadge';
 import { PriorityBadge } from '../components/PriorityBadge';
+import { NotificationBell } from '../components/NotificationBell';
+import { api } from '../services/api';
 
 export const CitizenDashboard = ({ complaints, currentUser, setView, setSelectedComplaintId }) => {
   // Filter complaints for this citizen if logged in, or show active citizen complaints
@@ -25,38 +33,109 @@ export const CitizenDashboard = ({ complaints, currentUser, setView, setSelected
   const inProgress = userComplaints.filter(c => c.status === 'In Progress' || c.status === 'Assigned' || c.status === 'Under Review').length;
   const resolved = userComplaints.filter(c => c.status === 'Resolved').length;
 
+  // In-app Notifications State
+  const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [activeNotifFilter, setActiveNotifFilter] = useState('all'); // 'all' | 'unread'
+  const [loadingNotifs, setLoadingNotifs] = useState(false);
+
+  const userId = currentUser?.uid || currentUser?.id || 'citizen_demo_1';
+  const userEmail = currentUser?.email || 'aarav.sharma@example.com';
+
+  const fetchUserNotifications = async () => {
+    setLoadingNotifs(true);
+    try {
+      const res = await api.getNotifications(userId, userEmail);
+      if (res && res.notifications) {
+        setNotifications(res.notifications);
+        setUnreadCount(res.unreadCount || 0);
+      }
+    } catch (err) {
+      console.warn('Dashboard notification load note:', err.message);
+    } finally {
+      setLoadingNotifs(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserNotifications();
+    const timer = setInterval(fetchUserNotifications, 20000);
+    return () => clearInterval(timer);
+  }, [userId, userEmail]);
+
+  const handleMarkAsRead = async (notificationId) => {
+    try {
+      await api.markNotificationRead(notificationId, userId);
+      setNotifications(prev =>
+        prev.map(n => n.notificationId === notificationId ? { ...n, read: true } : n)
+      );
+      setUnreadCount(prev => Math.max(0, prev - 1));
+    } catch (err) {
+      console.error('Error marking read:', err);
+    }
+  };
+
+  const handleMarkAllAsRead = async () => {
+    try {
+      await api.markAllNotificationsRead(userId, userEmail);
+      setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+      setUnreadCount(0);
+    } catch (err) {
+      console.error('Error marking all read:', err);
+    }
+  };
+
   const handleViewDetails = (id) => {
     setSelectedComplaintId(id);
     setView('track');
   };
 
+  const filteredNotifs = activeNotifFilter === 'unread'
+    ? notifications.filter(n => !n.read)
+    : notifications;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Top Banner with Action */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-gradient-to-r from-teal-700 via-teal-600 to-emerald-600 text-white shadow-md">
+      {/* Top Banner with Action & Notification Bell */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-teal-700 via-teal-600 to-emerald-600 text-white shadow-xl">
         <div>
-          <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-xs font-bold uppercase tracking-wider">
-            Citizen Dashboard
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold mt-1.5 tracking-tight">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-xs font-bold uppercase tracking-wider">
+              Citizen Dashboard
+            </span>
+            {unreadCount > 0 && (
+              <span className="px-2 py-0.5 rounded-full bg-rose-500 text-white text-[11px] font-extrabold animate-pulse">
+                {unreadCount} Unread Notifications
+              </span>
+            )}
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold mt-2 tracking-tight">
             Welcome back, {currentUser?.name || 'Citizen'}!
           </h1>
           <p className="text-xs sm:text-sm text-teal-100 mt-1 max-w-xl">
-            Track your ongoing public grievance filings, monitor department progress, and file new issues directly to civic authorities.
+            Track your ongoing public grievance filings, monitor department progress, and receive live SMS, Email, and In-App resolution alerts.
           </p>
         </div>
-        <button
-          onClick={() => setView('report')}
-          className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white text-teal-800 font-bold text-sm shadow-md hover:bg-teal-50 transition-all active:scale-95 flex-shrink-0"
-        >
-          <PlusCircle className="w-4 h-4 text-teal-600" />
-          <span>Report New Issue</span>
-        </button>
+
+        <div className="flex items-center gap-3">
+          {/* Notification Bell in Dashboard */}
+          <div className="bg-white/10 backdrop-blur rounded-2xl p-1 border border-white/20">
+            <NotificationBell onSelectComplaint={(id) => handleViewDetails(id)} />
+          </div>
+
+          <button
+            onClick={() => setView('report')}
+            className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white text-teal-800 font-bold text-sm shadow-md hover:bg-teal-50 transition-all active:scale-95 flex-shrink-0"
+          >
+            <PlusCircle className="w-4 h-4 text-teal-600" />
+            <span>Report New Issue</span>
+          </button>
+        </div>
       </div>
 
       {/* 4 Metric Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
+        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
           <div>
             <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Complaints</div>
             <div className="text-2xl font-extrabold text-slate-900 mt-1">{total}</div>
@@ -66,7 +145,7 @@ export const CitizenDashboard = ({ complaints, currentUser, setView, setSelected
           </div>
         </div>
 
-        <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
+        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
           <div>
             <div className="text-xs font-semibold text-amber-600 uppercase tracking-wider">Pending Action</div>
             <div className="text-2xl font-extrabold text-amber-600 mt-1">{pending}</div>
@@ -76,7 +155,7 @@ export const CitizenDashboard = ({ complaints, currentUser, setView, setSelected
           </div>
         </div>
 
-        <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
+        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
           <div>
             <div className="text-xs font-semibold text-blue-600 uppercase tracking-wider">In Progress</div>
             <div className="text-2xl font-extrabold text-blue-600 mt-1">{inProgress}</div>
@@ -86,7 +165,7 @@ export const CitizenDashboard = ({ complaints, currentUser, setView, setSelected
           </div>
         </div>
 
-        <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
+        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
           <div>
             <div className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Resolved</div>
             <div className="text-2xl font-extrabold text-emerald-600 mt-1">{resolved}</div>
@@ -98,11 +177,11 @@ export const CitizenDashboard = ({ complaints, currentUser, setView, setSelected
       </div>
 
       {/* Recent Complaints Section */}
-      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-        <div className="p-5 border-b border-slate-200 flex items-center justify-between">
+      <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-slate-200 flex items-center justify-between">
           <div>
             <h2 className="text-base font-bold text-slate-900">Recent Complaints</h2>
-            <p className="text-xs text-slate-500">Overview of your submitted issues and current status</p>
+            <p className="text-xs text-slate-500">Overview of your submitted issues and current field status</p>
           </div>
           <button
             onClick={() => setView('my-complaints')}
@@ -120,7 +199,7 @@ export const CitizenDashboard = ({ complaints, currentUser, setView, setSelected
             <p className="text-xs text-slate-400 mt-1">Have you spotted an issue in your area? Report it to start tracking.</p>
             <button
               onClick={() => setView('report')}
-              className="mt-4 px-4 py-2 bg-teal-600 text-white rounded-lg text-xs font-bold shadow hover:bg-teal-700 transition-colors"
+              className="mt-4 px-4 py-2 bg-teal-600 text-white rounded-xl text-xs font-bold shadow hover:bg-teal-700 transition-colors"
             >
               Report Your First Issue
             </button>
@@ -167,7 +246,7 @@ export const CitizenDashboard = ({ complaints, currentUser, setView, setSelected
                     <td className="p-4 text-right">
                       <button
                         onClick={() => handleViewDetails(c.complaintId)}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-teal-50 text-teal-700 font-bold hover:bg-teal-100/80 transition-colors"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-teal-50 text-teal-700 font-bold hover:bg-teal-100/80 transition-colors"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         <span>Track</span>
@@ -177,6 +256,165 @@ export const CitizenDashboard = ({ complaints, currentUser, setView, setSelected
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+      </div>
+
+      {/* Notification & Multi-Channel Dispatch History */}
+      <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2">
+              <Bell className="w-5 h-5 text-teal-600" />
+              <h2 className="text-base font-bold text-slate-900">Notification & Activity History</h2>
+              {unreadCount > 0 && (
+                <span className="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 text-[11px] font-bold">
+                  {unreadCount} unread
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Live audit record of all automated Email, SMS, and In-App notifications sent to your registered contact points
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="flex bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+              <button
+                onClick={() => setActiveNotifFilter('all')}
+                className={`px-3 py-1 rounded-lg transition-colors ${
+                  activeNotifFilter === 'all' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                All ({notifications.length})
+              </button>
+              <button
+                onClick={() => setActiveNotifFilter('unread')}
+                className={`px-3 py-1 rounded-lg transition-colors ${
+                  activeNotifFilter === 'unread' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                Unread ({unreadCount})
+              </button>
+            </div>
+
+            {unreadCount > 0 && (
+              <button
+                onClick={handleMarkAllAsRead}
+                className="px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-bold text-teal-700 flex items-center gap-1 transition-colors"
+              >
+                <Check className="w-3.5 h-3.5" />
+                <span>Mark all read</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {filteredNotifs.length === 0 ? (
+          <div className="p-12 text-center text-slate-400">
+            <Inbox className="w-12 h-12 mx-auto mb-2 opacity-30 text-slate-500" />
+            <p className="text-sm font-semibold text-slate-700">No notifications in this view</p>
+            <p className="text-xs text-slate-400 mt-1">
+              Whenever an officer reviews, assigns, or resolves your grievances, automated alerts will be logged here.
+            </p>
+          </div>
+        ) : (
+          <div className="divide-y divide-slate-100">
+            {filteredNotifs.map((n) => (
+              <div
+                key={n.notificationId}
+                className={`p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors hover:bg-slate-50/80 ${
+                  !n.read ? 'bg-teal-50/30' : 'bg-white'
+                }`}
+              >
+                <div className="flex items-start gap-3.5">
+                  <div className="mt-1">
+                    {n.type === 'resolved' ? (
+                      <div className="w-9 h-9 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                        <CheckCircle2 className="w-5 h-5" />
+                      </div>
+                    ) : n.type === 'status_changed' ? (
+                      <div className="w-9 h-9 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center">
+                        <RefreshCw className="w-5 h-5" />
+                      </div>
+                    ) : n.type === 'assigned' ? (
+                      <div className="w-9 h-9 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
+                        <ShieldCheck className="w-5 h-5" />
+                      </div>
+                    ) : (
+                      <div className="w-9 h-9 rounded-2xl bg-teal-100 text-teal-600 flex items-center justify-center">
+                        <Clock className="w-5 h-5" />
+                      </div>
+                    )}
+                  </div>
+
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-sm text-slate-900">{n.title}</span>
+                      {!n.read && (
+                        <span className="w-2 h-2 rounded-full bg-teal-600" title="Unread"></span>
+                      )}
+                      <span className="text-xs text-slate-400 font-mono">
+                        {new Date(n.createdAt).toLocaleString()}
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed max-w-2xl">
+                      {n.message}
+                    </p>
+
+                    {/* Channels & Delivery metadata */}
+                    <div className="flex flex-wrap items-center gap-2 mt-2">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        Dispatched Via:
+                      </span>
+
+                      {n.channels?.includes('email') && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-bold">
+                          <Mail className="w-3 h-3" />
+                          <span>Email ({n.deliveryStatus?.email || 'delivered'})</span>
+                        </span>
+                      )}
+
+                      {n.channels?.includes('sms') && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold">
+                          <Smartphone className="w-3 h-3" />
+                          <span>SMS ({n.deliveryStatus?.sms || 'delivered'})</span>
+                        </span>
+                      )}
+
+                      {n.channels?.includes('in_app') && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-bold">
+                          <Bell className="w-3 h-3" />
+                          <span>In-App (Saved)</span>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Actions */}
+                <div className="flex items-center gap-2 self-end sm:self-center flex-shrink-0">
+                  <button
+                    onClick={() => handleViewDetails(n.complaintId)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors"
+                  >
+                    <span>Track {n.complaintId}</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </button>
+
+                  {!n.read && (
+                    <button
+                      onClick={() => handleMarkAsRead(n.notificationId)}
+                      title="Mark as read"
+                      className="p-1.5 text-slate-400 hover:text-teal-700 hover:bg-teal-50 rounded-lg transition-colors"
+                    >
+                      <Check className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>

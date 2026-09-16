@@ -87,18 +87,23 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
     try {
       if (targetStatus && targetStatus !== selectedComplaint.status) {
         await api.updateStatus(selectedComplaint.complaintId, targetStatus, remarksVal || `Status changed to ${targetStatus} by Officer ${currentUser?.name || 'In-Charge'}`);
+        if (targetStatus === 'Resolved') {
+          setFeedbackMsg('✅ Grievance resolved! Automated notifications dispatched to citizen via Email, SMS, and In-App.');
+        } else {
+          setFeedbackMsg(`✅ Status changed to "${targetStatus}". Automated updates dispatched via Email, SMS & In-App.`);
+        }
       } else if (remarksVal) {
         await api.addRemarks(selectedComplaint.complaintId, `[${currentUser?.name || 'Officer'} Remark]: ${remarksVal}`);
+        setFeedbackMsg('✅ Field inspection remark saved successfully!');
       }
 
-      setFeedbackMsg('Inspection report & grievance status updated successfully!');
       if (onRefreshComplaints) onRefreshComplaints();
 
       setTimeout(() => {
         setSelectedComplaint(null);
-      }, 1000);
+      }, 1800);
     } catch (err) {
-      setFeedbackMsg('Failed to update status: ' + err.message);
+      setFeedbackMsg('❌ Failed to update status: ' + err.message);
     } finally {
       setIsUpdating(false);
     }

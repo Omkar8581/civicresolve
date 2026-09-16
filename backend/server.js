@@ -6,6 +6,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import complaintsRouter from './routes/complaints.js';
 import authRouter from './routes/auth.js';
+import notificationsRouter from './routes/notifications.js';
 
 dotenv.config();
 
@@ -42,6 +43,7 @@ app.get('/api/health', (req, res) => {
 // Mount API Routes
 app.use('/api/complaints', complaintsRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/notifications', notificationsRouter);
 
 // Serve Frontend Static Build (Single Page Application support)
 const distPath = path.join(__dirname, '../frontend/dist');

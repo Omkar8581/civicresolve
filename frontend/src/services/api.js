@@ -100,5 +100,47 @@ export const api = {
     });
     if (!res.ok) throw new Error('Registration failed');
     return res.json();
+  },
+
+  // Citizen Notification System
+  async getNotifications(userId, email) {
+    const params = new URLSearchParams();
+    if (userId) params.append('userId', userId);
+    if (email) params.append('email', email);
+
+    const res = await fetch(`${API_BASE}/notifications?${params.toString()}`);
+    if (!res.ok) throw new Error('Failed to fetch notifications');
+    return res.json();
+  },
+
+  async markNotificationRead(notificationId, userId) {
+    const res = await fetch(`${API_BASE}/notifications/${encodeURIComponent(notificationId)}/read`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId })
+    });
+    if (!res.ok) throw new Error('Failed to mark notification as read');
+    return res.json();
+  },
+
+  async markAllNotificationsRead(userId, email) {
+    const res = await fetch(`${API_BASE}/notifications/read-all`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, email })
+    });
+    if (!res.ok) throw new Error('Failed to mark all notifications as read');
+    return res.json();
+  },
+
+  async getNotificationSummary(userId, email) {
+    const params = new URLSearchParams();
+    if (userId) params.append('userId', userId);
+    if (email) params.append('email', email);
+
+    const res = await fetch(`${API_BASE}/notifications/summary?${params.toString()}`);
+    if (!res.ok) throw new Error('Failed to fetch notification summary');
+    return res.json();
   }
 };
+
