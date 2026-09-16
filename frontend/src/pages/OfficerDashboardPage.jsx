@@ -110,13 +110,13 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 bg-[#F8FAFC]">
       {/* Top Officer Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-teal-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-700">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-slate-950 via-[#0F172A] to-[#1E3A8A] text-white p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-700">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/40 text-[10px] font-extrabold uppercase tracking-widest flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5" /> Department Field Portal
+            <span className="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/40 text-[10px] font-extrabold uppercase tracking-widest flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-sky-400" /> Department Field Portal
             </span>
             <span className="text-xs text-slate-400 font-semibold">• Authorized Officer Operations</span>
           </div>
@@ -129,11 +129,11 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
         </div>
 
         {/* View Switcher: List vs Map */}
-        <div className="flex rounded-xl bg-slate-800/90 p-1 text-xs font-bold text-slate-300 border border-slate-700 self-start md:self-center">
+        <div className="flex rounded-xl bg-slate-900/90 p-1 text-xs font-bold text-slate-300 border border-slate-700 self-start md:self-center">
           <button
             onClick={() => setActiveTab('list')}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-lg transition-colors ${
-              activeTab === 'list' ? 'bg-teal-600 text-white shadow-sm' : 'hover:text-white'
+              activeTab === 'list' ? 'bg-[#1E3A8A] text-white shadow-sm' : 'hover:text-white'
             }`}
           >
             <List className="w-4 h-4" />
@@ -142,7 +142,7 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
           <button
             onClick={() => setActiveTab('map')}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-lg transition-colors ${
-              activeTab === 'map' ? 'bg-teal-600 text-white shadow-sm' : 'hover:text-white'
+              activeTab === 'map' ? 'bg-[#1E3A8A] text-white shadow-sm' : 'hover:text-white'
             }`}
           >
             <MapIcon className="w-4 h-4" />
@@ -156,12 +156,12 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
         <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Assigned</span>
-            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center">
               <FileText className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-black text-slate-900 mt-2">{totalAssigned}</div>
-          <div className="text-[11px] text-slate-500 mt-0.5">Total in department</div>
+          <div className="text-2xl font-black text-[#0F172A] mt-2">{totalAssigned}</div>
+          <div className="text-[11px] text-[#64748B] mt-0.5">Total in department</div>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
@@ -172,18 +172,18 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
             </div>
           </div>
           <div className="text-2xl font-black text-amber-600 mt-2">{pendingCount}</div>
-          <div className="text-[11px] text-slate-500 mt-0.5">Awaiting inspection</div>
+          <div className="text-[11px] text-[#64748B] mt-0.5">Awaiting inspection</div>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-teal-600">In Progress</span>
-            <div className="w-8 h-8 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-800">In Progress</span>
+            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center">
               <RefreshCw className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-black text-teal-600 mt-2">{inProgressCount}</div>
-          <div className="text-[11px] text-slate-500 mt-0.5">Field crew deployed</div>
+          <div className="text-2xl font-black text-blue-800 mt-2">{inProgressCount}</div>
+          <div className="text-[11px] text-[#64748B] mt-0.5">Field crew deployed</div>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
@@ -243,7 +243,7 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by ID, keyword, citizen, address..."
-                className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-800"
+                className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-slate-800 transition-all"
               />
             </div>
 
@@ -321,8 +321,8 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
                       <td className="py-3.5 px-4 max-w-xs">
                         <div className="font-bold text-slate-800 line-clamp-1">{c.title}</div>
                         <div className="text-[11px] text-slate-500 line-clamp-1">{c.description}</div>
-                        <div className="mt-1 inline-flex items-center gap-1 text-[10px] font-semibold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200">
-                          <Sparkles className="w-2.5 h-2.5" />
+                        <div className="mt-1 inline-flex items-center gap-1 text-[10px] font-semibold text-blue-900 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">
+                          <Sparkles className="w-2.5 h-2.5 text-blue-700" />
                           <span>{c.category}</span>
                         </div>
                       </td>
@@ -348,9 +348,9 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
                       <td className="py-3.5 px-4 text-right">
                         <button
                           onClick={() => handleOpenDetails(c)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-800 font-bold text-xs border border-teal-200 transition-colors shadow-sm"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-900 font-bold text-xs border border-blue-200 transition-colors shadow-sm"
                         >
-                          <Eye className="w-3.5 h-3.5" />
+                          <Eye className="w-3.5 h-3.5 text-blue-700" />
                           <span>Inspect / Update</span>
                         </button>
                       </td>
@@ -372,7 +372,7 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
                 <span className="text-[10px] font-mono font-extrabold uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-600">
                   {selectedComplaint.complaintId}
                 </span>
-                <h2 className="text-xl font-extrabold text-slate-900 mt-1">
+                <h2 className="text-xl font-extrabold text-[#0F172A] mt-1">
                   Field Grievance Inspection
                 </h2>
               </div>
@@ -387,17 +387,17 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
             {/* Complaint summary */}
             <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-slate-900 text-sm">{selectedComplaint.title}</h3>
+                <h3 className="font-bold text-[#0F172A] text-sm">{selectedComplaint.title}</h3>
                 <div className="flex items-center gap-1.5">
                   <PriorityBadge priority={selectedComplaint.priority} />
                   <StatusBadge status={selectedComplaint.status} />
                 </div>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed">{selectedComplaint.description}</p>
+              <p className="text-xs text-[#64748B] leading-relaxed">{selectedComplaint.description}</p>
               
               <div className="pt-2 flex flex-wrap gap-4 text-xs text-slate-500 border-t border-slate-200/60">
                 <span className="flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-teal-600" />
+                  <MapPin className="w-3.5 h-3.5 text-blue-700" />
                   {selectedComplaint.address || 'Address provided'}
                 </span>
                 <span className="flex items-center gap-1">
@@ -409,9 +409,9 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
 
             {/* AI Summary note if available */}
             {selectedComplaint.aiAnalysis && (
-              <div className="bg-emerald-50/60 border border-emerald-200 rounded-2xl p-3.5 text-xs text-emerald-900">
-                <div className="font-bold flex items-center gap-1.5 mb-1 text-emerald-800">
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+              <div className="bg-blue-50/70 border border-blue-200 rounded-2xl p-3.5 text-xs text-blue-950">
+                <div className="font-bold flex items-center gap-1.5 mb-1 text-blue-900">
+                  <Sparkles className="w-3.5 h-3.5 text-sky-500" />
                   AI Triage Insights
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-[11px]">
@@ -425,7 +425,7 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
 
             {/* Action Form */}
             <div className="space-y-4 pt-2">
-              <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+              <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#0F172A]">
                 Update Work Order & Redressal Status
               </h4>
 
@@ -437,7 +437,7 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
                   <select
                     value={updateStatusVal}
                     onChange={(e) => setUpdateStatusVal(e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-sky-500 focus:outline-none"
                   >
                     <option value="Pending">Pending (Inspection Scheduled)</option>
                     <option value="In Progress">In Progress (Field Work Active)</option>
@@ -465,13 +465,13 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
                   value={remarksVal}
                   onChange={(e) => setRemarksVal(e.target.value)}
                   placeholder="e.g. Dispatched asphalt repair team. Pothole filled and road leveled on 16 Sep."
-                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none"
                 />
               </div>
 
               {feedbackMsg && (
                 <div className={`p-3 rounded-xl text-xs font-semibold ${
-                  feedbackMsg.includes('success') ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'
+                  feedbackMsg.includes('success') || feedbackMsg.includes('✅') ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'
                 }`}>
                   {feedbackMsg}
                 </div>
@@ -501,9 +501,9 @@ export const OfficerDashboardPage = ({ complaints = [], onRefreshComplaints, cur
                     type="button"
                     disabled={isUpdating}
                     onClick={() => handleUpdateStatus()}
-                    className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-sm flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
+                    className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-[#0F172A] hover:bg-[#1E3A8A] text-white font-bold text-xs shadow-sm flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
                   >
-                    {isUpdating ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+                    {isUpdating ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5 text-sky-400" />}
                     <span>Save Update</span>
                   </button>
                 </div>

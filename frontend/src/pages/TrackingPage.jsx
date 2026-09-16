@@ -104,16 +104,16 @@ export const TrackingPage = ({ initialComplaintId, complaints = [] }) => {
               value={searchId}
               onChange={(e) => setSearchId(e.target.value)}
               placeholder="Enter Complaint ID (e.g. CR-2025-1001)"
-              className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 font-mono text-sm bg-white shadow-sm"
+              className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono text-sm bg-white shadow-sm"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm shadow-md transition-colors flex items-center gap-2"
+            className="px-6 py-3 rounded-xl bg-[#0F172A] hover:bg-[#1E3A8A] text-white font-bold text-sm shadow-md shadow-slate-900/15 transition-colors flex items-center gap-2"
           >
             <span>{loading ? 'Searching...' : 'Track'}</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 text-sky-400" />
           </button>
         </form>
 
@@ -128,7 +128,7 @@ export const TrackingPage = ({ initialComplaintId, complaints = [] }) => {
                   setSearchId(c.complaintId);
                   loadComplaint(c.complaintId);
                 }}
-                className="font-mono text-[11px] font-semibold text-teal-700 bg-teal-50 hover:bg-teal-100 px-2 py-0.5 rounded border border-teal-200"
+                className="font-mono text-[11px] font-semibold text-blue-900 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded border border-blue-200"
               >
                 {c.complaintId}
               </button>
@@ -158,9 +158,9 @@ export const TrackingPage = ({ initialComplaintId, complaints = [] }) => {
                 <StatusBadge status={complaint.status} />
                 <PriorityBadge priority={complaint.priority} />
               </div>
-              <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">{complaint.title}</h2>
+              <h2 className="text-xl font-extrabold text-[#0F172A] tracking-tight">{complaint.title}</h2>
             </div>
-            <div className="text-right text-xs text-slate-500">
+            <div className="text-right text-xs text-[#64748B]">
               <div>Filed on: <span className="font-semibold text-slate-700">{new Date(complaint.createdAt).toLocaleDateString()}</span></div>
               <div>Last update: <span className="font-semibold text-slate-700">{new Date(complaint.updatedAt).toLocaleString()}</span></div>
             </div>
@@ -179,14 +179,14 @@ export const TrackingPage = ({ initialComplaintId, complaints = [] }) => {
                     <div
                       className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs transition-colors shadow-sm ${
                         isPassed
-                          ? 'bg-teal-600 text-white ring-4 ring-teal-100'
+                          ? (idx === 5 ? 'bg-emerald-600 text-white ring-4 ring-emerald-100' : 'bg-blue-800 text-white ring-4 ring-blue-100')
                           : 'bg-slate-100 text-slate-400 border border-slate-200'
                       }`}
                     >
                       {isPassed ? <CheckCircle2 className="w-5 h-5" /> : idx + 1}
                     </div>
                     <div>
-                      <div className={`text-xs font-bold ${isCurrent ? 'text-teal-700' : isPassed ? 'text-slate-800' : 'text-slate-400'}`}>
+                      <div className={`text-xs font-bold ${isCurrent ? 'text-blue-900' : isPassed ? 'text-slate-800' : 'text-slate-400'}`}>
                         {step.title}
                       </div>
                       <div className="text-[10px] text-slate-500 hidden md:block mt-0.5 leading-tight">
@@ -204,15 +204,15 @@ export const TrackingPage = ({ initialComplaintId, complaints = [] }) => {
             {/* Left: Metadata and AI Summary */}
             <div className="space-y-4 text-xs">
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
-                <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider">Complaint Information</h4>
+                <h4 className="font-bold text-[#0F172A] text-xs uppercase tracking-wider">Complaint Information</h4>
                 <div>
                   <span className="text-slate-500 block text-[11px]">Category</span>
                   <span className="font-bold text-slate-900 text-sm">{complaint.category}</span>
                 </div>
                 <div>
                   <span className="text-slate-500 block text-[11px]">Assigned Department</span>
-                  <span className="font-bold text-teal-800 flex items-center gap-1.5 mt-0.5">
-                    <Building2 className="w-3.5 h-3.5 text-teal-600" />
+                  <span className="font-bold text-blue-900 flex items-center gap-1.5 mt-0.5">
+                    <Building2 className="w-3.5 h-3.5 text-blue-700" />
                     <span>{complaint.department}</span>
                   </span>
                 </div>
@@ -223,13 +223,13 @@ export const TrackingPage = ({ initialComplaintId, complaints = [] }) => {
               </div>
 
               {/* AI Summary Card */}
-              <div className="p-4 rounded-xl bg-teal-50/60 border border-teal-200 space-y-1">
-                <span className="text-[10px] font-bold text-teal-800 uppercase tracking-wider">AI Classification Insight</span>
-                <p className="text-xs text-teal-900 italic font-medium leading-relaxed">
+              <div className="p-4 rounded-xl bg-blue-50/70 border border-blue-200 space-y-1">
+                <span className="text-[10px] font-bold text-blue-900 uppercase tracking-wider">AI Classification Insight</span>
+                <p className="text-xs text-blue-950 italic font-medium leading-relaxed">
                   &quot;{complaint.aiSummary}&quot;
                 </p>
-                <div className="text-[10px] text-teal-700 pt-1 flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5" />
+                <div className="text-[10px] text-blue-800 pt-1 flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5 text-blue-700" />
                   <span>Verified by CivicResolve NLP Engine</span>
                 </div>
               </div>
@@ -247,8 +247,8 @@ export const TrackingPage = ({ initialComplaintId, complaints = [] }) => {
             <div className="space-y-4">
               <div>
                 <div className="flex items-center justify-between mb-1.5 text-xs">
-                  <span className="font-bold text-slate-800 flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-teal-600" />
+                  <span className="font-bold text-[#0F172A] flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-blue-700" />
                     <span>Location Map</span>
                   </span>
                   <span className="text-slate-500 text-[11px] truncate max-w-xs">{complaint.address}</span>

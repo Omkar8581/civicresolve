@@ -2,15 +2,138 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =========================================================
+   CIVICRESOLVE DESIGN SYSTEM – CSS VARIABLES / THEME TOKENS
+   Modern Civic-Tech / AI Dashboard Theme Palette
+   ========================================================= */
+:root {
+  /* Brand Core Colors */
+  --color-primary: #0F172A;          /* Deep Navy */
+  --color-primary-light: #1E293B;    /* Deep Navy Slate */
+  --color-secondary: #1E3A8A;        /* Professional Blue */
+  --color-secondary-hover: #172554;  /* Deep Professional Blue */
+  --color-accent: #38BDF8;           /* Sky Blue */
+  --color-accent-hover: #0EA5E9;     /* Sky Blue Focus */
+  --color-accent-subtle: #F0F9FF;    /* Sky Blue Tint */
+  --color-accent-border: #BAE6FD;    /* Sky Blue Border */
+
+  /* Canvas & Surface */
+  --color-bg-main: #F8FAFC;          /* Main Background */
+  --color-card: #FFFFFF;             /* Cards */
+  --color-surface-hover: #F1F5F9;    /* Card Hover / Subtle Surface */
+
+  /* Typography */
+  --color-text-primary: #0F172A;     /* Primary Text */
+  --color-text-secondary: #64748B;   /* Secondary Text */
+  --color-text-muted: #94A3B8;       /* Muted Text */
+
+  /* Borders & Dividers */
+  --color-border: #E2E8F0;           /* Clean Borders */
+  --color-border-dark: #CBD5E1;      /* Interactive Borders */
+
+  /* Meaningful Complaint Status Tokens */
+  --color-status-resolved: #16A34A;  /* Resolved (Green) */
+  --color-status-resolved-bg: #F0FDF4;
+  --color-status-resolved-border: #BBF7D0;
+
+  --color-status-progress: #1E3A8A;  /* In Progress (Blue) */
+  --color-status-progress-bg: #EFF6FF;
+  --color-status-progress-border: #BFDBFE;
+
+  --color-status-pending: #F59E0B;   /* Pending (Orange/Amber) */
+  --color-status-pending-bg: #FFFBEB;
+  --color-status-pending-border: #FDE68A;
+
+  --color-status-rejected: #DC2626;  /* Rejected (Red) */
+  --color-status-rejected-bg: #FEF2F2;
+  --color-status-rejected-border: #FECACA;
+}
+
 body {
+  background-color: var(--color-bg-main);
+  color: var(--color-text-primary);
   font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Common Themed Card Style */
+.civic-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgb(15 23 42 / 0.05), 0 1px 2px -1px rgb(15 23 42 / 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.civic-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 6px -1px rgb(15 23 42 / 0.07), 0 2px 4px -2px rgb(15 23 42 / 0.05);
+}
+
+/* Primary Button (Deep Navy with Sky Blue Accent Highlights) */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-secondary);
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
+}
+
+/* Secondary Action Button (Professional Blue) */
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-hover);
+  box-shadow: 0 4px 12px rgba(23, 37, 84, 0.3);
+}
+
+/* Accent Action Button (Sky Blue Highlights) */
+.btn-accent {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+  font-weight: 700;
+  border-radius: 0.75rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-accent:hover {
+  background-color: var(--color-accent-hover);
+  color: #ffffff;
+}
+
+/* Clean Input Styling */
+.civic-input {
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  border-radius: 0.75rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.civic-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
 }
 
 /* Leaflet Map custom styles */
 .leaflet-container {
   width: 100%;
   height: 100%;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-border);
   z-index: 10;
 }
 

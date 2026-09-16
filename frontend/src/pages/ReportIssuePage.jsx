@@ -166,8 +166,8 @@ export const ReportIssuePage = ({ currentUser, setView, onComplaintCreated }) =>
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-bold uppercase tracking-wider mb-2 border border-teal-200">
-          <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-[#1E3A8A] text-xs font-bold uppercase tracking-wider mb-2 border border-sky-200">
+          <Sparkles className="w-3.5 h-3.5 text-sky-500" />
           <span>AI-Assisted Dispatch Form</span>
         </div>
         <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Report a Public Issue</h1>
@@ -196,7 +196,7 @@ export const ReportIssuePage = ({ currentUser, setView, onComplaintCreated }) =>
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Large pothole near school entrance creating accident hazard"
-            className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+            className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm transition-all"
           />
         </div>
 
@@ -211,14 +211,14 @@ export const ReportIssuePage = ({ currentUser, setView, onComplaintCreated }) =>
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Describe the exact problem, how long it has existed, and the impact on local traffic or residents..."
-            className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+            className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm transition-all"
           />
         </div>
 
         {/* Evidence Media Upload */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Photo upload */}
-          <div className="border-2 border-dashed border-slate-300 hover:border-teal-500 rounded-xl p-4 text-center cursor-pointer transition-colors relative">
+          <div className="border-2 border-dashed border-slate-300 hover:border-sky-500 rounded-xl p-4 text-center cursor-pointer transition-colors relative">
             <input
               type="file"
               accept="image/*"
@@ -232,7 +232,7 @@ export const ReportIssuePage = ({ currentUser, setView, onComplaintCreated }) =>
                   alt="Evidence Preview"
                   className="w-full h-32 object-cover rounded-lg"
                 />
-                <span className="inline-block mt-2 text-xs font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded">
+                <span className="inline-block mt-2 text-xs font-semibold text-[#1E3A8A] bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
                   Photo Loaded (Click to change)
                 </span>
               </div>
@@ -246,7 +246,7 @@ export const ReportIssuePage = ({ currentUser, setView, onComplaintCreated }) =>
           </div>
 
           {/* Video upload */}
-          <div className="border-2 border-dashed border-slate-300 hover:border-teal-500 rounded-xl p-4 text-center cursor-pointer transition-colors relative">
+          <div className="border-2 border-dashed border-slate-300 hover:border-sky-500 rounded-xl p-4 text-center cursor-pointer transition-colors relative">
             <input
               type="file"
               accept="video/*"
@@ -268,7 +268,7 @@ export const ReportIssuePage = ({ currentUser, setView, onComplaintCreated }) =>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <label className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                <MapPin className="w-4 h-4 text-teal-600" />
+                <MapPin className="w-4 h-4 text-[#1E3A8A]" />
                 <span>Issue Location *</span>
               </label>
               <p className="text-xs text-slate-500">
@@ -281,7 +281,7 @@ export const ReportIssuePage = ({ currentUser, setView, onComplaintCreated }) =>
                 type="button"
                 onClick={handleUseCurrentLocation}
                 disabled={detectingLocation}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-50 text-teal-700 border border-teal-200 text-xs font-bold hover:bg-teal-100 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-50 text-[#1E3A8A] border border-sky-200 text-xs font-bold hover:bg-sky-100 transition-colors"
               >
                 <Navigation className={`w-3.5 h-3.5 ${detectingLocation ? 'animate-spin' : ''}`} />
                 <span>{detectingLocation ? 'Locating...' : 'Use My Current Location'}</span>
@@ -365,18 +365,18 @@ export const ReportIssuePage = ({ currentUser, setView, onComplaintCreated }) =>
           <button
             type="submit"
             disabled={isAnalyzing}
-            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-extrabold text-sm shadow-md shadow-teal-600/20 flex items-center justify-center gap-2 transition-all active:scale-[0.99]"
+            className="w-full py-3.5 rounded-xl bg-[#0F172A] hover:bg-[#1E3A8A] text-white font-extrabold text-sm shadow-md shadow-slate-900/20 flex items-center justify-center gap-2 transition-all active:scale-[0.99]"
           >
             {isAnalyzing ? (
               <>
-                <Sparkles className="w-4 h-4 animate-spin" />
+                <Sparkles className="w-4 h-4 animate-spin text-sky-400" />
                 <span>Running AI Classification & Priority Detection...</span>
               </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4" />
+                <Sparkles className="w-4 h-4 text-sky-400" />
                 <span>Analyze with AI & Review Complaint</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-sky-400" />
               </>
             )}
           </button>
@@ -388,14 +388,14 @@ export const ReportIssuePage = ({ currentUser, setView, onComplaintCreated }) =>
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
           <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
             {/* Modal Header */}
-            <div className="bg-gradient-to-r from-teal-600 to-emerald-600 p-5 text-white flex items-center justify-between">
+            <div className="bg-gradient-to-r from-slate-950 via-[#0F172A] to-[#1E3A8A] p-5 text-white flex items-center justify-between border-b border-slate-800">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-white/20 rounded-lg">
-                  <Sparkles className="w-5 h-5 text-white" />
+                <div className="p-1.5 bg-white/10 rounded-lg">
+                  <Sparkles className="w-5 h-5 text-sky-400" />
                 </div>
                 <div>
                   <h3 className="font-extrabold text-base leading-tight">AI Complaint Analysis Completed</h3>
-                  <p className="text-xs text-teal-100">Review AI classification before saving to database</p>
+                  <p className="text-xs text-slate-300">Review AI classification before saving to database</p>
                 </div>
               </div>
               <button
@@ -427,19 +427,19 @@ export const ReportIssuePage = ({ currentUser, setView, onComplaintCreated }) =>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Assigned Priority</span>
-                  <div className={`text-xs font-bold mt-1 ${aiReviewData.priority === 'High' ? 'text-rose-600' : 'text-blue-600'}`}>
+                  <div className={`text-xs font-bold mt-1 ${aiReviewData.priority === 'High' ? 'text-rose-600' : 'text-blue-800'}`}>
                     ● {aiReviewData.priority} Priority
                   </div>
                 </div>
               </div>
 
               {/* Department Routing */}
-              <div className="p-3.5 rounded-xl bg-teal-50 border border-teal-200">
-                <span className="text-[10px] font-bold text-teal-700 uppercase tracking-wider flex items-center gap-1">
-                  <Building2 className="w-3.5 h-3.5" />
+              <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-200">
+                <span className="text-[10px] font-bold text-blue-800 uppercase tracking-wider flex items-center gap-1">
+                  <Building2 className="w-3.5 h-3.5 text-blue-700" />
                   <span>Target Department Routing</span>
                 </span>
-                <div className="text-xs font-extrabold text-teal-900 mt-1">
+                <div className="text-xs font-extrabold text-blue-950 mt-1">
                   {aiReviewData.department}
                 </div>
               </div>
@@ -471,14 +471,14 @@ export const ReportIssuePage = ({ currentUser, setView, onComplaintCreated }) =>
                 type="button"
                 onClick={handleFinalSubmit}
                 disabled={isSubmitting}
-                className="px-6 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-extrabold shadow-md flex items-center gap-1.5 transition-all"
+                className="px-6 py-2.5 rounded-xl bg-[#0F172A] hover:bg-[#1E3A8A] text-white text-xs font-extrabold shadow-md flex items-center gap-1.5 transition-all"
               >
                 {isSubmitting ? (
                   <span>Saving Complaint...</span>
                 ) : (
                   <>
                     <span>Confirm & Submit Complaint</span>
-                    <CheckCircle2 className="w-4 h-4" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   </>
                 )}
               </button>

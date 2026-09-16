@@ -62,14 +62,14 @@ export const AdminLoginPage = () => {
     <div className="min-h-[85vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md bg-white border border-slate-200 rounded-3xl shadow-xl overflow-hidden">
         {/* Header */}
-        <div className="bg-slate-900 text-white p-6 text-center border-b border-slate-800">
-          <div className="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400 mx-auto flex items-center justify-center mb-2">
+        <div className="bg-[#0F172A] text-white p-6 text-center border-b border-slate-800">
+          <div className="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/30 text-sky-400 mx-auto flex items-center justify-center mb-2">
             <Building2 className="w-6 h-6" />
           </div>
-          <span className="px-2.5 py-0.5 rounded-full bg-slate-800 text-[10px] font-extrabold uppercase tracking-widest text-teal-400 border border-slate-700">
+          <span className="px-2.5 py-0.5 rounded-full bg-slate-800 text-[10px] font-extrabold uppercase tracking-widest text-sky-400 border border-slate-700">
             Official Municipal Operations
           </span>
-          <h1 className="text-2xl font-extrabold tracking-tight mt-1.5">Officer & Admin Login</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight mt-1.5 text-white">Officer & Admin Login</h1>
           <p className="text-xs text-slate-400 mt-0.5">
             Authorized administrative gateway for department leads & supervisors
           </p>
@@ -87,7 +87,7 @@ export const AdminLoginPage = () => {
             </Link>
             <button
               type="button"
-              className="py-2.5 rounded-lg bg-slate-900 text-white shadow-sm text-center"
+              className="py-2.5 rounded-lg bg-[#0F172A] text-white shadow-sm text-center"
             >
               Officer Portal
             </button>
@@ -111,7 +111,7 @@ export const AdminLoginPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="admin@civicresolve.demo"
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm font-mono"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm font-mono transition-all"
                 />
               </div>
             </div>
@@ -126,7 +126,7 @@ export const AdminLoginPage = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm transition-all"
                 />
               </div>
             </div>
@@ -134,14 +134,14 @@ export const AdminLoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 mt-2"
+              className="w-full py-3 rounded-xl bg-[#0F172A] hover:bg-[#1E3A8A] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 mt-2"
             >
               {loading ? (
                 <span>Verifying Department Clearance...</span>
               ) : (
                 <>
                   <span>Authenticate & Access Dashboard</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 text-sky-400" />
                 </>
               )}
             </button>
@@ -163,7 +163,7 @@ export const AdminLoginPage = () => {
               <button
                 type="button"
                 onClick={fillAdmin}
-                className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-bold shadow-sm"
+                className="px-2.5 py-1 rounded-lg bg-[#0F172A] hover:bg-[#1E3A8A] text-white text-[11px] font-bold shadow-sm transition-all"
               >
                 Auto-Fill Admin
               </button>
@@ -178,7 +178,7 @@ export const AdminLoginPage = () => {
               <button
                 type="button"
                 onClick={fillOfficer}
-                className="px-2.5 py-1 rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-[11px] font-bold shadow-sm"
+                className="px-2.5 py-1 rounded-lg bg-[#1E3A8A] hover:bg-blue-900 text-white text-[11px] font-bold shadow-sm transition-all"
               >
                 Auto-Fill Officer
               </button>

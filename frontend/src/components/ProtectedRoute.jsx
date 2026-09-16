@@ -9,7 +9,7 @@ export const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   if (loading) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center">
-        <RefreshCw className="w-8 h-8 text-teal-600 animate-spin mb-3" />
+        <RefreshCw className="w-8 h-8 text-[#1E3A8A] animate-spin mb-3" />
         <p className="text-xs font-semibold text-slate-500">Verifying security clearance & session...</p>
       </div>
     );
@@ -41,9 +41,9 @@ export const ProtectedRoute = ({ children, allowedRoles = [] }) => {
           <div className="mt-6 pt-4 border-t border-slate-100 flex flex-col gap-2">
             <Link
               to={role === 'admin' ? '/admin/dashboard' : role === 'officer' ? '/officer/dashboard' : '/citizen/dashboard'}
-              className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow transition-colors flex items-center justify-center gap-2"
+              className="w-full py-2.5 rounded-xl bg-[#0F172A] hover:bg-[#1E3A8A] text-white text-xs font-bold shadow transition-colors flex items-center justify-center gap-2"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-4 h-4 text-sky-400" />
               <span>Return to Your {role === 'admin' ? 'Admin' : role === 'officer' ? 'Officer' : 'Citizen'} Dashboard</span>
             </Link>
           </div>

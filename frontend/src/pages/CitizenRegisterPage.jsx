@@ -85,15 +85,15 @@ export const CitizenRegisterPage = () => {
     <div className="min-h-[90vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-xl bg-white border border-slate-200 rounded-3xl shadow-xl overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-teal-700 via-teal-600 to-emerald-600 p-6 text-white text-center">
-          <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur mx-auto flex items-center justify-center mb-2">
-            <ShieldCheck className="w-6 h-6 text-white" />
+        <div className="bg-gradient-to-r from-slate-950 via-[#0F172A] to-[#1E3A8A] p-6 text-white text-center border-b border-slate-800">
+          <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur mx-auto flex items-center justify-center mb-2 border border-sky-400/20 shadow-sm">
+            <ShieldCheck className="w-6 h-6 text-sky-400" />
           </div>
-          <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-[10px] font-extrabold uppercase tracking-wider">
+          <span className="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 text-[10px] font-extrabold uppercase tracking-wider border border-sky-400/30">
             Official Citizen Registration
           </span>
-          <h1 className="text-2xl font-extrabold tracking-tight mt-1">Create Citizen Account</h1>
-          <p className="text-xs text-teal-100 mt-0.5">
+          <h1 className="text-2xl font-extrabold tracking-tight mt-1 text-white">Create Citizen Account</h1>
+          <p className="text-xs text-slate-300 mt-0.5">
             Join the municipal smart-city network to report and resolve public issues
           </p>
         </div>
@@ -119,7 +119,7 @@ export const CitizenRegisterPage = () => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="e.g. Aarav Sharma"
-                  className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm"
+                  className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
                 />
               </div>
             </div>
@@ -137,7 +137,7 @@ export const CitizenRegisterPage = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="name@example.com"
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
                   />
                 </div>
               </div>
@@ -154,7 +154,7 @@ export const CitizenRegisterPage = () => {
                     onChange={handleChange}
                     placeholder="9876543210"
                     maxLength={10}
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
                   />
                 </div>
               </div>
@@ -173,7 +173,7 @@ export const CitizenRegisterPage = () => {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="At least 8 characters"
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
                   />
                 </div>
               </div>
@@ -189,7 +189,7 @@ export const CitizenRegisterPage = () => {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     placeholder="Repeat password"
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
                   />
                 </div>
               </div>
@@ -207,7 +207,7 @@ export const CitizenRegisterPage = () => {
                   value={formData.address}
                   onChange={handleChange}
                   placeholder="Flat/House No., Street Name, Neighborhood"
-                  className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm"
+                  className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
                 />
               </div>
             </div>
@@ -225,7 +225,7 @@ export const CitizenRegisterPage = () => {
                     value={formData.city}
                     onChange={handleChange}
                     placeholder="e.g. New Delhi"
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
                   />
                 </div>
               </div>
@@ -241,7 +241,7 @@ export const CitizenRegisterPage = () => {
                     value={formData.state}
                     onChange={handleChange}
                     placeholder="e.g. Delhi"
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
                   />
                 </div>
               </div>
@@ -250,14 +250,14 @@ export const CitizenRegisterPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm shadow-md shadow-teal-600/20 transition-all flex items-center justify-center gap-2 mt-4 active:scale-[0.99]"
+              className="w-full py-3 rounded-xl bg-slate-900 hover:bg-[#1E3A8A] text-white font-bold text-sm shadow-md shadow-slate-900/20 transition-all flex items-center justify-center gap-2 mt-4 active:scale-[0.99]"
             >
               {loading ? (
                 <span>Registering Citizen & Setting up Profile...</span>
               ) : (
                 <>
                   <span>Create Account & Open Dashboard</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 text-sky-400" />
                 </>
               )}
             </button>
@@ -265,7 +265,7 @@ export const CitizenRegisterPage = () => {
 
           <div className="text-center pt-2 text-xs text-slate-600">
             Already have an account?{' '}
-            <Link to="/login" className="font-extrabold text-teal-700 hover:underline">
+            <Link to="/login" className="font-extrabold text-blue-600 hover:text-blue-800 hover:underline">
               Citizen Sign In
             </Link>
           </div>

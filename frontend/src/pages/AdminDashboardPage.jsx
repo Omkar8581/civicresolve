@@ -156,7 +156,7 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
           <button
             onClick={() => setActiveTab('list')}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-lg transition-colors ${
-              activeTab === 'list' ? 'bg-white text-teal-800 shadow-sm' : 'hover:text-slate-900'
+              activeTab === 'list' ? 'bg-white text-[#0F172A] shadow-sm font-extrabold' : 'hover:text-slate-900'
             }`}
           >
             <BarChart3 className="w-4 h-4" />
@@ -165,10 +165,10 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
           <button
             onClick={() => setActiveTab('map')}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-lg transition-colors ${
-              activeTab === 'map' ? 'bg-white text-teal-800 shadow-sm' : 'hover:text-slate-900'
+              activeTab === 'map' ? 'bg-white text-[#0F172A] shadow-sm font-extrabold' : 'hover:text-slate-900'
             }`}
           >
-            <Map className="w-4 h-4 text-teal-600" />
+            <Map className="w-4 h-4 text-[#1E3A8A]" />
             <span>GIS Map View</span>
           </button>
         </div>
@@ -234,7 +234,7 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
                     <span className="font-bold text-slate-900">{count} ({pct}%)</span>
                   </div>
                   <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-teal-600 rounded-full" style={{ width: `${pct}%` }} />
+                    <div className="h-full bg-[#1E3A8A] rounded-full" style={{ width: `${pct}%` }} />
                   </div>
                 </div>
               );
@@ -334,7 +334,7 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search ID, title, citizen..."
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                 />
               </div>
 
@@ -343,7 +343,7 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
                 <select
                   value={filterCategory}
                   onChange={(e) => setFilterCategory(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white font-medium text-slate-700"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white font-medium text-slate-700 outline-none focus:ring-2 focus:ring-sky-500"
                 >
                   <option value="All">All Categories</option>
                   {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
@@ -355,7 +355,7 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
                 <select
                   value={filterPriority}
                   onChange={(e) => setFilterPriority(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white font-medium text-slate-700"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white font-medium text-slate-700 outline-none focus:ring-2 focus:ring-sky-500"
                 >
                   <option value="All">All Priorities</option>
                   <option value="High">High</option>
@@ -369,7 +369,7 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
                 <select
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white font-medium text-slate-700"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white font-medium text-slate-700 outline-none focus:ring-2 focus:ring-sky-500"
                 >
                   <option value="All">All Statuses</option>
                   <option value="Pending">Pending</option>
@@ -384,7 +384,7 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
                 <select
                   value={filterDepartment}
                   onChange={(e) => setFilterDepartment(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white font-medium text-slate-700 truncate"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white font-medium text-slate-700 truncate outline-none focus:ring-2 focus:ring-sky-500"
                 >
                   <option value="All">All Departments</option>
                   {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
@@ -441,9 +441,9 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
                         <td className="p-4 text-right whitespace-nowrap">
                           <button
                             onClick={() => handleOpenDetails(c)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-bold transition-colors shadow-sm"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0F172A] hover:bg-[#1E3A8A] text-white font-bold transition-all shadow-sm"
                           >
-                            <Eye className="w-3.5 h-3.5" />
+                            <Eye className="w-3.5 h-3.5 text-sky-400" />
                             <span>Manage</span>
                           </button>
                         </td>
@@ -462,23 +462,23 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
           <div className="relative w-full max-w-3xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden my-8 max-h-[90vh] flex flex-col">
             {/* Modal Header */}
-            <div className="bg-slate-900 text-white p-5 flex items-center justify-between border-b border-slate-800">
+            <div className="bg-[#0F172A] text-white p-5 flex items-center justify-between border-b border-slate-800">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold">
+                <div className="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">
                   ⚖️
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-sm font-bold text-teal-400">{selectedComplaint.complaintId}</span>
+                    <span className="font-mono text-sm font-bold text-sky-400">{selectedComplaint.complaintId}</span>
                     <StatusBadge status={selectedComplaint.status} />
                     <PriorityBadge priority={selectedComplaint.priority} />
                   </div>
-                  <h3 className="font-extrabold text-base leading-tight mt-0.5">{selectedComplaint.title}</h3>
+                  <h3 className="font-extrabold text-base leading-tight mt-0.5 text-white">{selectedComplaint.title}</h3>
                 </div>
               </div>
               <button
                 onClick={() => setSelectedComplaint(null)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -522,15 +522,15 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
                   </div>
 
                   {/* AI Evaluation */}
-                  <div className="p-4 rounded-xl bg-teal-50/60 border border-teal-200 space-y-2">
-                    <span className="font-bold text-teal-800 uppercase tracking-wider text-[10px] flex items-center gap-1">
-                      <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+                  <div className="p-4 rounded-xl bg-sky-50/70 border border-sky-200 space-y-2">
+                    <span className="font-bold text-[#1E3A8A] uppercase tracking-wider text-[10px] flex items-center gap-1">
+                      <Sparkles className="w-3.5 h-3.5 text-sky-500" />
                       <span>AI Diagnostic Summary</span>
                     </span>
-                    <p className="text-teal-950 font-medium italic">
+                    <p className="text-slate-900 font-medium italic">
                       &quot;{selectedComplaint.aiSummary}&quot;
                     </p>
-                    <div className="flex gap-2 text-[10px] font-bold text-teal-800 pt-1">
+                    <div className="flex gap-2 text-[10px] font-bold text-[#1E3A8A] pt-1">
                       <span>Category: {selectedComplaint.category}</span>
                       <span>•</span>
                       <span>Severity: {selectedComplaint.severity}</span>
@@ -566,7 +566,7 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
               {/* Admin Actions Box */}
               <div className="p-5 rounded-2xl bg-slate-100 border border-slate-200 space-y-4">
                 <h4 className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
-                  <Building2 className="w-4 h-4 text-teal-600" />
+                  <Building2 className="w-4 h-4 text-[#1E3A8A]" />
                   <span>Administrative Dispatch Actions</span>
                 </h4>
 
@@ -579,7 +579,7 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
                     <select
                       value={updateStatusVal}
                       onChange={(e) => setUpdateStatusVal(e.target.value)}
-                      className="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-bold text-slate-800"
+                      className="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-bold text-slate-800 outline-none focus:ring-2 focus:ring-sky-500"
                     >
                       <option value="Pending">Pending</option>
                       <option value="Assigned">Assigned to Department</option>
@@ -597,7 +597,7 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
                     <select
                       value={assignDeptVal}
                       onChange={(e) => setAssignDeptVal(e.target.value)}
-                      className="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-bold text-slate-800 truncate"
+                      className="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-bold text-slate-800 truncate outline-none focus:ring-2 focus:ring-sky-500"
                     >
                       {DEPARTMENTS.map(d => (
                         <option key={d} value={d}>{d}</option>
@@ -616,7 +616,7 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
                     value={remarksVal}
                     onChange={(e) => setRemarksVal(e.target.value)}
                     placeholder="Enter dispatch notes, crew arrival time, contractor details, or resolution sign-off..."
-                    className="w-full p-2.5 rounded-xl border border-slate-300 text-xs bg-white"
+                    className="w-full p-2.5 rounded-xl border border-slate-300 text-xs bg-white outline-none focus:ring-2 focus:ring-sky-500"
                   />
                   {selectedComplaint.officerRemarks && (
                     <div className="text-[11px] text-slate-500 mt-1">
@@ -633,14 +633,14 @@ export const AdminDashboardPage = ({ complaints, onRefreshComplaints, currentUse
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setSelectedComplaint(null)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200"
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSaveActions}
                   disabled={isUpdating}
-                  className="px-6 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-extrabold shadow-md flex items-center gap-1.5 transition-colors"
+                  className="px-6 py-2.5 rounded-xl bg-[#0F172A] hover:bg-[#1E3A8A] text-white text-xs font-extrabold shadow-md flex items-center gap-1.5 transition-all active:scale-95"
                 >
                   {isUpdating ? 'Saving...' : 'Save & Dispatch Updates'}
                 </button>

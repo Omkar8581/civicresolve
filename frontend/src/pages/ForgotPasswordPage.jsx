@@ -36,12 +36,12 @@ export const ForgotPasswordPage = () => {
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md bg-white border border-slate-200 rounded-3xl shadow-xl overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-teal-700 to-emerald-600 p-6 text-white text-center">
-          <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur mx-auto flex items-center justify-center mb-2">
-            <KeyRound className="w-6 h-6 text-white" />
+        <div className="bg-gradient-to-r from-slate-950 via-[#0F172A] to-[#1E3A8A] p-6 text-white text-center border-b border-slate-800">
+          <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur mx-auto flex items-center justify-center mb-2 border border-sky-400/20 shadow-sm">
+            <KeyRound className="w-6 h-6 text-sky-400" />
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight">Reset Password</h1>
-          <p className="text-xs text-teal-100 mt-0.5">
+          <h1 className="text-2xl font-extrabold tracking-tight text-white">Reset Password</h1>
+          <p className="text-xs text-slate-300 mt-0.5">
             We will send you a secure Firebase link to reset your account password
           </p>
         </div>
@@ -76,7 +76,7 @@ export const ForgotPasswordPage = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@example.com"
-                    className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm transition-all"
                   />
                 </div>
               </div>
@@ -84,7 +84,7 @@ export const ForgotPasswordPage = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm shadow-md transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-[#0F172A] hover:bg-[#1E3A8A] text-white font-bold text-sm shadow-md transition-colors flex items-center justify-center gap-2 active:scale-[0.99]"
               >
                 {loading ? 'Sending Reset Link...' : 'Send Password Reset Email'}
               </button>
@@ -103,7 +103,7 @@ export const ForgotPasswordPage = () => {
 
           {!message && (
             <div className="text-center pt-2 text-xs">
-              <Link to="/login" className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 font-semibold">
+              <Link to="/login" className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-semibold transition-colors">
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Back to Login</span>
               </Link>

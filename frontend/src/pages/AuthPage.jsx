@@ -50,12 +50,12 @@ export const AuthPage = ({ setView, onLoginSuccess }) => {
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md bg-white border border-slate-200 rounded-3xl shadow-xl overflow-hidden">
         {/* Header banner */}
-        <div className="bg-gradient-to-r from-teal-600 to-emerald-600 p-6 text-white text-center">
-          <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur mx-auto flex items-center justify-center mb-2">
-            <User className="w-6 h-6 text-white" />
+        <div className="bg-gradient-to-r from-slate-950 via-[#0F172A] to-[#1E3A8A] p-6 text-white text-center border-b border-slate-800">
+          <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur mx-auto flex items-center justify-center mb-2 border border-sky-400/20 shadow-sm">
+            <User className="w-6 h-6 text-sky-400" />
           </div>
-          <h2 className="text-2xl font-extrabold tracking-tight">Citizen Portal</h2>
-          <p className="text-xs text-teal-100 mt-1">
+          <h2 className="text-2xl font-extrabold tracking-tight text-white">Citizen Portal</h2>
+          <p className="text-xs text-slate-300 mt-1">
             {isRegister ? 'Register your official citizen account' : 'Sign in to file and track your civic complaints'}
           </p>
         </div>
@@ -67,14 +67,14 @@ export const AuthPage = ({ setView, onLoginSuccess }) => {
             <button
               type="button"
               onClick={() => { setIsRegister(false); setError(''); }}
-              className={`flex-1 py-2 rounded-lg transition-colors ${!isRegister ? 'bg-white text-teal-700 shadow-sm' : 'hover:text-slate-900'}`}
+              className={`flex-1 py-2 rounded-lg transition-colors ${!isRegister ? 'bg-white text-[#0F172A] shadow-sm font-extrabold' : 'hover:text-slate-900'}`}
             >
               Citizen Login
             </button>
             <button
               type="button"
               onClick={() => { setIsRegister(true); setError(''); }}
-              className={`flex-1 py-2 rounded-lg transition-colors ${isRegister ? 'bg-white text-teal-700 shadow-sm' : 'hover:text-slate-900'}`}
+              className={`flex-1 py-2 rounded-lg transition-colors ${isRegister ? 'bg-white text-[#0F172A] shadow-sm font-extrabold' : 'hover:text-slate-900'}`}
             >
               New Registration
             </button>
@@ -99,7 +99,7 @@ export const AuthPage = ({ setView, onLoginSuccess }) => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Aarav Sharma"
-                    className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm transition-all"
                   />
                 </div>
               </div>
@@ -115,7 +115,7 @@ export const AuthPage = ({ setView, onLoginSuccess }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm transition-all"
                 />
               </div>
             </div>
@@ -130,7 +130,7 @@ export const AuthPage = ({ setView, onLoginSuccess }) => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 98765 43210"
-                    className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm transition-all"
                   />
                 </div>
               </div>
@@ -146,7 +146,7 @@ export const AuthPage = ({ setView, onLoginSuccess }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm transition-all"
                 />
               </div>
             </div>
@@ -154,14 +154,14 @@ export const AuthPage = ({ setView, onLoginSuccess }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 mt-2"
+              className="w-full py-3 rounded-xl bg-[#0F172A] hover:bg-[#1E3A8A] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 mt-2 active:scale-[0.99]"
             >
               {loading ? (
                 <span>Processing...</span>
               ) : (
                 <>
                   <span>{isRegister ? 'Complete Registration' : 'Sign In'}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 text-sky-400" />
                 </>
               )}
             </button>
@@ -172,7 +172,7 @@ export const AuthPage = ({ setView, onLoginSuccess }) => {
             <button
               type="button"
               onClick={fillDemoCitizen}
-              className="text-xs font-semibold text-teal-700 hover:text-teal-800 bg-teal-50 hover:bg-teal-100/70 border border-teal-200 px-3 py-1.5 rounded-lg transition-colors"
+              className="text-xs font-semibold text-[#1E3A8A] hover:text-blue-900 bg-sky-50 hover:bg-sky-100/70 border border-sky-200 px-3 py-1.5 rounded-lg transition-colors"
             >
               ⚡ Fill Demo Citizen Credentials
             </button>

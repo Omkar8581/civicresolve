@@ -93,20 +93,20 @@ export const ProfilePage = () => {
       <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden p-6 sm:p-8 space-y-6">
         {/* User Card */}
         <div className="flex items-center gap-4 pb-6 border-b border-slate-100">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-teal-600 to-emerald-600 text-white flex items-center justify-center font-extrabold text-2xl shadow-md">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#0F172A] to-[#1E3A8A] text-white flex items-center justify-center font-extrabold text-2xl shadow-md border border-slate-700/20">
             {currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : 'U'}
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-xl font-extrabold text-slate-900">{currentUser?.name}</h2>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-teal-50 text-teal-700 border border-teal-200">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-sky-50 text-[#1E3A8A] border border-sky-200 font-semibold">
                 {role}
               </span>
             </div>
             <div className="text-xs text-slate-500 font-mono mt-0.5">{currentUser?.email}</div>
             {!isCitizen && currentUser?.department && (
-              <div className="text-xs font-bold text-teal-800 mt-1 flex items-center gap-1">
-                <Building2 className="w-3.5 h-3.5 text-teal-600" />
+              <div className="text-xs font-bold text-[#1E3A8A] mt-1 flex items-center gap-1">
+                <Building2 className="w-3.5 h-3.5 text-[#1E3A8A]" />
                 <span>{currentUser.department}</span>
               </div>
             )}
@@ -127,7 +127,7 @@ export const ProfilePage = () => {
                   disabled={!isCitizen}
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm disabled:bg-slate-50 disabled:text-slate-500"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm disabled:bg-slate-50 disabled:text-slate-500 outline-none transition-all"
                 />
               </div>
             </div>
@@ -160,7 +160,7 @@ export const ProfilePage = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="e.g. 9876543210"
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm disabled:bg-slate-50 disabled:text-slate-500"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm disabled:bg-slate-50 disabled:text-slate-500 outline-none transition-all"
                 />
               </div>
             </div>
@@ -196,7 +196,7 @@ export const ProfilePage = () => {
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
                   />
                 </div>
               </div>
@@ -211,7 +211,7 @@ export const ProfilePage = () => {
                       name="city"
                       value={formData.city}
                       onChange={handleChange}
-                      className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm"
+                      className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -225,7 +225,7 @@ export const ProfilePage = () => {
                       name="state"
                       value={formData.state}
                       onChange={handleChange}
-                      className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 text-sm"
+                      className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -235,9 +235,9 @@ export const ProfilePage = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-md flex items-center gap-2 transition-all active:scale-95"
+                  className="px-6 py-2.5 rounded-xl bg-[#0F172A] hover:bg-[#1E3A8A] text-white font-bold text-xs shadow-md shadow-slate-900/10 flex items-center gap-2 transition-all active:scale-95"
                 >
-                  <Save className="w-3.5 h-3.5" />
+                  <Save className="w-3.5 h-3.5 text-sky-400" />
                   <span>{loading ? 'Saving...' : 'Save Profile Changes'}</span>
                 </button>
               </div>

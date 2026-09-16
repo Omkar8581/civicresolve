@@ -62,7 +62,7 @@ export const MapComponent = ({
     if (selectedLocation && selectedLocation.lat && selectedLocation.lng) {
       const pinIcon = L.divIcon({
         className: 'custom-pin',
-        html: `<div style="background-color: #0d9488; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); border: 2px solid white; font-weight: bold;">📍</div>`,
+        html: `<div style="background-color: #1E3A8A; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(15,23,42,0.4); border: 2px solid #38BDF8; font-weight: bold;">📍</div>`,
         iconSize: [32, 32],
         iconAnchor: [16, 32]
       });
@@ -82,14 +82,14 @@ export const MapComponent = ({
       complaints.forEach((c) => {
         if (!c.latitude || !c.longitude) return;
 
-        let pinColor = '#3b82f6'; // Blue
-        if (c.priority === 'High') pinColor = '#ef4444'; // Red
-        else if (c.status === 'Resolved') pinColor = '#10b981'; // Green
-        else if (c.priority === 'Medium') pinColor = '#f59e0b'; // Amber
+        let pinColor = '#1E3A8A'; // Professional Blue (In Progress / Default)
+        if (c.priority === 'High') pinColor = '#DC2626'; // Red (Error/High)
+        else if (c.status === 'Resolved') pinColor = '#16A34A'; // Green (Success)
+        else if (c.priority === 'Medium' || c.status === 'Pending') pinColor = '#F59E0B'; // Amber (Warning)
 
         const markerIcon = L.divIcon({
           className: 'complaint-pin',
-          html: `<div style="background-color: ${pinColor}; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); border: 2px solid white; font-size: 13px;">⚠️</div>`,
+          html: `<div style="background-color: ${pinColor}; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(15,23,42,0.3); border: 2px solid white; font-size: 13px;">⚠️</div>`,
           iconSize: [28, 28],
           iconAnchor: [14, 28],
           popupAnchor: [0, -28]
