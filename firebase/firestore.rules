@@ -35,7 +35,20 @@ service cloud.firestore {
     
     // User Profiles
     match /users/{userId} {
-      allow read, write: if isOwner(userId) || isAdmin();
+      // User can read their own profile; admins can read all
+      allow read: if isOwner(userId) || isAdmin();
+
+      // Newly authenticated citizen can safely create their own users/{uid} document
+      // Strictly enforced role: "citizen", preventing unauthorized admin/officer role creation
+      allow create: if isOwner(userId) && 
+                      request.resource.data.uid == userId &&
+                      request.resource.data.role == 'citizen';
+
+      // Citizens cannot elevate their role to admin or officer, nor modify another user's profile
+      allow update: if (isOwner(userId) && request.resource.data.role == resource.data.role) || isAdmin();
+
+      // Only administrators can remove profiles
+      allow delete: if isAdmin();
     }
     
     // Department Activity Logs

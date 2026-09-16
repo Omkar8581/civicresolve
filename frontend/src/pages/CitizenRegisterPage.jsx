@@ -22,12 +22,10 @@ export const CitizenRegisterPage = () => {
     phone: '',
     password: '',
     confirmPassword: '',
-    address: '',
-    city: '',
-    state: '',
   });
 
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   const { register } = useAuth();
@@ -42,20 +40,35 @@ export const CitizenRegisterPage = () => {
   };
 
   const validate = () => {
-    const { name, email, phone, password, confirmPassword, address, city, state } = formData;
+    const { name, email, phone, password, confirmPassword } = formData;
 
-    // Required fields check
+    // 1. Missing fields check
     if (!name.trim()) return 'Full Name is required';
     if (!email.trim()) return 'Email Address is required';
-    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return 'Please enter a valid email address';
     if (!phone.trim()) return 'Mobile Number is required';
-    if (!phone.replace(/\D/g, '').match(/^\d{10}$/)) return 'Please enter a valid 10-digit mobile number';
     if (!password) return 'Password is required';
-    if (password.length < 8) return 'Password must contain at least 8 characters';
-    if (password !== confirmPassword) return 'Password and Confirm Password do not match';
-    if (!address.trim()) return 'Street Address is required';
-    if (!city.trim()) return 'City is required';
-    if (!state.trim()) return 'State is required';
+    if (!confirmPassword) return 'Please confirm your password';
+
+    // 2. Email format check
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      return 'Please enter a valid email address';
+    }
+
+    // 3. Phone format check (flexible 7 to 15 digits)
+    const digitsOnly = phone.replace(/\D/g, '');
+    if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+      return 'Please enter a valid mobile number (at least 7 to 15 digits)';
+    }
+
+    // 4. Password length check (Firebase standard min 6 chars)
+    if (password.length < 6) {
+      return 'Password must contain at least 6 characters';
+    }
+
+    // 5. Password match check
+    if (password !== confirmPassword) {
+      return 'Password and Confirm Password do not match';
+    }
 
     return null;
   };
@@ -70,13 +83,25 @@ export const CitizenRegisterPage = () => {
 
     setLoading(true);
     setError('');
+    setSuccessMessage('');
 
     try {
-      await register(formData);
-      navigate('/citizen/dashboard');
+      const userProfile = await register({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password
+      });
+
+      setSuccessMessage(`Account created successfully for ${userProfile.name || 'Citizen'}! Redirecting to Citizen Dashboard...`);
+
+      // Automatic redirect after brief delay to show success state
+      setTimeout(() => {
+        navigate('/citizen/dashboard');
+      }, 1000);
     } catch (err) {
-      setError(err.message || 'Registration failed. Please check your details.');
-    } finally {
+      console.error('Citizen registration error:', err);
+      setError(err.message || 'Unable to complete registration. Please check your details.');
       setLoading(false);
     }
   };
@@ -99,10 +124,22 @@ export const CitizenRegisterPage = () => {
         </div>
 
         <div className="p-6 sm:p-8 space-y-5">
+          {/* Success Message Banner */}
+          {successMessage && (
+            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2.5 animate-fade-in">
+              <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+              <div>
+                <div className="font-bold text-sm text-emerald-900">Registration Successful</div>
+                <div className="text-xs text-emerald-700 mt-0.5">{successMessage}</div>
+              </div>
+            </div>
+          )}
+
+          {/* Error Message Banner */}
           {error && (
             <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2 animate-fade-in">
               <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-              <span className="font-semibold">{error}</span>
+              <div className="font-semibold">{error}</div>
             </div>
           )}
 
@@ -116,64 +153,66 @@ export const CitizenRegisterPage = () => {
                   type="text"
                   name="name"
                   required
+                  disabled={loading || !!successMessage}
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="e.g. Aarav Sharma"
-                  className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all disabled:bg-slate-50"
                 />
               </div>
             </div>
 
-            {/* Email & Phone */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="block mb-1 font-bold text-slate-800">Email Address *</label>
-                <div className="relative">
-                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="name@example.com"
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block mb-1 font-bold text-slate-800">Mobile Number *</label>
-                <div className="relative">
-                  <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    type="tel"
-                    name="phone"
-                    required
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="9876543210"
-                    maxLength={10}
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
-                  />
-                </div>
+            {/* Email Address */}
+            <div>
+              <label className="block mb-1 font-bold text-slate-800">Email Address *</label>
+              <div className="relative">
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  disabled={loading || !!successMessage}
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="name@example.com"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all disabled:bg-slate-50"
+                />
               </div>
             </div>
 
-            {/* Password & Confirm */}
+            {/* Phone Number */}
+            <div>
+              <label className="block mb-1 font-bold text-slate-800">Phone Number *</label>
+              <div className="relative">
+                <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <input
+                  type="tel"
+                  name="phone"
+                  required
+                  disabled={loading || !!successMessage}
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="e.g. 9876543210 or +91 9876543210"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all disabled:bg-slate-50"
+                />
+              </div>
+            </div>
+
+            {/* Password & Confirm Password */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block mb-1 font-bold text-slate-800">Password (Min. 8 chars) *</label>
+                <label className="block mb-1 font-bold text-slate-800">Password (Min. 6 chars) *</label>
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
                     type="password"
                     name="password"
                     required
+                    disabled={loading || !!successMessage}
                     value={formData.password}
                     onChange={handleChange}
-                    placeholder="At least 8 characters"
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
+                    placeholder="Min. 6 characters"
+                    className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all disabled:bg-slate-50"
                   />
                 </div>
               </div>
@@ -186,77 +225,36 @@ export const CitizenRegisterPage = () => {
                     type="password"
                     name="confirmPassword"
                     required
+                    disabled={loading || !!successMessage}
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     placeholder="Repeat password"
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
+                    className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all disabled:bg-slate-50"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Address */}
-            <div>
-              <label className="block mb-1 font-bold text-slate-800">Street / Residential Address *</label>
-              <div className="relative">
-                <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  name="address"
-                  required
-                  value={formData.address}
-                  onChange={handleChange}
-                  placeholder="Flat/House No., Street Name, Neighborhood"
-                  className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
-                />
-              </div>
-            </div>
-
-            {/* City & State */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="block mb-1 font-bold text-slate-800">City *</label>
-                <div className="relative">
-                  <Building className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    type="text"
-                    name="city"
-                    required
-                    value={formData.city}
-                    onChange={handleChange}
-                    placeholder="e.g. New Delhi"
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block mb-1 font-bold text-slate-800">State / Region *</label>
-                <div className="relative">
-                  <Navigation className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    type="text"
-                    name="state"
-                    required
-                    value={formData.state}
-                    onChange={handleChange}
-                    placeholder="e.g. Delhi"
-                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm outline-none transition-all"
-                  />
-                </div>
-              </div>
+            {/* Account Role Badge (Fixed citizen role notice) */}
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 text-[11px] flex items-center justify-between">
+              <span className="font-semibold">Registered Public Role:</span>
+              <span className="px-2 py-0.5 rounded-full bg-sky-50 text-[#1E3A8A] border border-sky-200 font-extrabold uppercase text-[10px]">
+                Citizen
+              </span>
             </div>
 
             <button
               type="submit"
-              disabled={loading}
-              className="w-full py-3 rounded-xl bg-slate-900 hover:bg-[#1E3A8A] text-white font-bold text-sm shadow-md shadow-slate-900/20 transition-all flex items-center justify-center gap-2 mt-4 active:scale-[0.99]"
+              disabled={loading || !!successMessage}
+              className="w-full py-3 rounded-xl bg-slate-900 hover:bg-[#1E3A8A] text-white font-bold text-sm shadow-md shadow-slate-900/20 transition-all flex items-center justify-center gap-2 mt-4 active:scale-[0.99] disabled:opacity-60"
             >
               {loading ? (
                 <span>Registering Citizen & Setting up Profile...</span>
+              ) : successMessage ? (
+                <span>Redirecting to Dashboard...</span>
               ) : (
                 <>
-                  <span>Create Account & Open Dashboard</span>
+                  <span>Create Citizen Account</span>
                   <ArrowRight className="w-4 h-4 text-sky-400" />
                 </>
               )}
