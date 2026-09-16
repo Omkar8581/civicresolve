@@ -4,7 +4,11 @@
  * with resilient local NLP fallback.
  */
 
-const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://localhost:8000';
+let rawAiUrl = process.env.AI_SERVICE_URL || 'http://localhost:8000';
+if (rawAiUrl && !rawAiUrl.startsWith('http://') && !rawAiUrl.startsWith('https://')) {
+  rawAiUrl = `http://${rawAiUrl}`;
+}
+const AI_SERVICE_URL = rawAiUrl;
 
 export async function analyzeComplaintText(text, imageFilename = '') {
   try {
